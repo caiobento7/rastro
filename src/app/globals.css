@@ -1,0 +1,171 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-texto);
+  --font-heading: var(--font-texto);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Cores do Rastro */
+  --color-tinta: var(--tinta);
+  --color-papel: var(--papel);
+  --color-cobalto: var(--cobalto);
+  --color-grifo: var(--grifo);
+  --color-quebra: var(--quebra);
+  --color-seguro: var(--seguro);
+  --color-espera: var(--espera);
+  --color-linha: var(--linha);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+}
+
+/*
+ * Paleta: papel frio de comprovante, tinta azul-marinho, cobalto para ações,
+ * amarelo de marca-texto para a prova decisiva, vermelho só para o ponto em que o rastro quebra.
+ */
+:root {
+  --papel: #f3f4f6;
+  --tinta: #172033;
+  --cobalto: #2747d0;
+  --grifo: #f6e04b;
+  --quebra: #c4283a;
+  --seguro: #15784f;
+  --espera: #a3620a;
+  --linha: #d9dde4;
+
+  --background: var(--papel);
+  --foreground: var(--tinta);
+  --card: #ffffff;
+  --card-foreground: var(--tinta);
+  --popover: #ffffff;
+  --popover-foreground: var(--tinta);
+  --primary: var(--cobalto);
+  --primary-foreground: #ffffff;
+  --secondary: #e7eaf0;
+  --secondary-foreground: var(--tinta);
+  --muted: #eceef2;
+  --muted-foreground: #586174;
+  --accent: #e9edfb;
+  --accent-foreground: #1b2f86;
+  --destructive: var(--quebra);
+  --border: var(--linha);
+  --input: #cfd4dc;
+  --ring: #6a82e8;
+  --chart-1: #2747d0;
+  --chart-2: #8b93a5;
+  --chart-3: #6a4fc0;
+  --chart-4: #0f7f81;
+  --chart-5: #a3620a;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--cobalto);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* O traço de marca-texto sob a prova decisiva. */
+  .grifo {
+    background-image: linear-gradient(
+      transparent 38%,
+      color-mix(in oklab, var(--grifo) 92%, transparent) 38%,
+      color-mix(in oklab, var(--grifo) 92%, transparent) 88%,
+      transparent 88%
+    );
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    padding: 0 0.15em;
+    margin: 0 -0.15em;
+  }
+
+  /* Linha tracejada do trecho em que o rastro se perde. */
+  .rastro-perdido {
+    background-image: repeating-linear-gradient(to bottom, var(--quebra) 0 5px, transparent 5px 10px);
+  }
+  .rastro-perdido-h {
+    background-image: repeating-linear-gradient(to right, var(--quebra) 0 6px, transparent 6px 12px);
+  }
+}
+
+/* O único movimento automático do site: o rastro sendo desenhado no topo da página inicial. */
+@keyframes desenhar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes acender {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.desenhar {
+  transform-origin: left center;
+  animation: desenhar 1.6s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+.acender {
+  animation: acender 0.45s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .desenhar,
+  .acender {
+    animation: none;
+  }
+}
