@@ -17,6 +17,27 @@ Li uma por uma 12 reclamações públicas de afiliados no Reclame Aqui, em 17/11
 | 11 | Mercado Livre | 11/04/2026 | Comissão negada por violação de diretrizes. Resposta em 10 dias. | Conta |
 | 12 | Mercado Livre | 15/05/2026 | Comissões caíram de cerca de R$ 1.200 para R$ 420 por mês; vendas para "familiares e amigos". Resposta em 12 dias. | Regra |
 
+## Na própria YouShop
+
+Pesquisado em 19/11/2026, em fontes públicas da YouShop.
+
+**Termos do Programa de Afiliados e Creators** ([youshop.co/termosepoliticas](https://youshop.co/termosepoliticas), aba "Afiliados e Creators", versão de setembro de 2025):
+
+- A comissão só é devida depois do pagamento e "após a finalização do período de garantia da venda" (item 4.3 b). É a causa **prazo**.
+- O produtor pode aceitar ou recusar a afiliação a seu critério, e afiliações sem venda há mais de 30 dias "poderão ser canceladas automaticamente e sem aviso prévio". É a causa **configuração**, e é uma que o creator dificilmente percebe sozinho.
+- A YouShop "fornecerá as ferramentas tecnológicas necessárias para o rastreamento das vendas" (item 3.3). Se o rastreamento falha, quem precisa saber primeiro é a tecnologia da própria YouShop.
+- Nos Termos de Uso, a compra pelo próprio link é proibida, inclusive do mesmo IP ou rede (cláusula 12.3), e pode levar a bloqueio. São as causas **regra** e **conta**.
+- Não encontrei nos termos públicos qual é o modelo de atribuição (último ou primeiro clique) nem por quanto tempo o link vale depois do clique. Para o creator, isso deixa mais espaço para a dúvida.
+
+**Central de Ajuda** ([ajuda.youshop.co](https://ajuda.youshop.co/)): tem guias para se afiliar, criar o link 2YOU, cupons e o app do creator. Não encontrei um artigo que explique por que uma venda não contou.
+
+**Reclame Aqui** ([página da YouShop](https://www.reclameaqui.com.br/empresa/youshop-tecnologia-servicos-e-pagamentos/)): reputação Ótima, 24 reclamações em 12 meses, 100% resolvidas e tempo médio de resposta de 18 horas (dados de 01/11/2025 a 31/10/2026). O atendimento é bom. Mesmo assim, as dúvidas de creators que aparecem lá são as mesmas causas do Rastro:
+
+- 06/11/2026, um creator: afiliou-se no dia 30 e ficou sem retorno. A YouShop respondeu que "houve uma instabilidade durante o processo de criação do seu cadastro". Uma falha real que apareceu pela reclamação pública.
+- 05/11/2026, uma creator começando: pediu ajuda com o link 2YOU. Na avaliação, ela registrou que o retorno demorou "devido a demanda do time".
+
+**O que isso muda na proposta:** a YouShop não tem um atendimento ruim para consertar. O Rastro serve para o atendimento continuar bom enquanto o número de creators cresce: o que os dados explicam vira resposta em minutos, e só o resto chega ao time. E uma falha como a instabilidade no cadastro vira alerta para a tecnologia antes da reclamação pública.
+
 ## O que tirei daqui
 
 1. **A frase é a mesma, a causa não.** "Minha venda não contou" esconde seis causas diferentes, e cada uma tem um dono diferente na empresa.

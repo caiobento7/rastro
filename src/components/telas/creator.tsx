@@ -30,7 +30,8 @@ function filtrar(vendas: ResumoVenda[], filtro: Filtro) {
   return vendas;
 }
 
-export function TelaCreator() {
+/** @param comIA true quando o servidor tem chave da API e a pergunta livre passa pelo Claude. */
+export function TelaCreator({ comIA = false }: { comIA?: boolean }) {
   const { estado, rastro } = useDemo();
   const creator = rastro.creator(estado.creatorAtual);
   const vendas = rastro.vendasDoCreator(creator.id);
@@ -93,7 +94,7 @@ export function TelaCreator() {
         </div>
       </dl>
 
-      <PerguntaLivre creatorId={creator.id} aoEscolher={setEscolhida} />
+      <PerguntaLivre creatorId={creator.id} aoEscolher={setEscolhida} comIA={comIA} />
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
         <section aria-labelledby="titulo-vendas" className="self-start rounded-xl border border-border bg-card">
@@ -152,7 +153,15 @@ export function TelaCreator() {
   );
 }
 
-function PerguntaLivre({ creatorId, aoEscolher }: { creatorId: string; aoEscolher: (id: string) => void }) {
+function PerguntaLivre({
+  creatorId,
+  aoEscolher,
+  comIA,
+}: {
+  creatorId: string;
+  aoEscolher: (id: string) => void;
+  comIA: boolean;
+}) {
   const [pergunta, setPergunta] = useState("");
   const [enviando, setEnviando] = useState(false);
   const exemplos = ["Minha venda de ontem não contou", "Cadê a comissão da creatina?", "Por que o treino do dia 15 não entrou?"];
@@ -226,6 +235,11 @@ function PerguntaLivre({ creatorId, aoEscolher }: { creatorId: string; aoEscolhe
           </button>
         ))}
       </div>
+      <p className="mt-3 border-t border-white/15 pt-3 text-xs leading-relaxed text-white/70">
+        {comIA
+          ? "O Claude entende a sua pergunta e reescreve a explicação. A causa sempre vem do motor de regras."
+          : "Nesta demonstração, as respostas vêm só do motor de regras, sem IA generativa e sem custo de API. Com a chave da API, o Claude entende a pergunta livre e reescreve a explicação; a causa continua vindo das regras."}
+      </p>
     </form>
   );
 }
