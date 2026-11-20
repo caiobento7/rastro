@@ -11,8 +11,7 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/core/**", "src/adapters/**", "src/app/api/**"],
-      // Chama a API paga do Claude; é coberto pelo teste manual descrito no README.
-      exclude: ["src/adapters/ia/claude.ts", "src/core/index.ts"],
+      exclude: ["src/core/index.ts"],
       reporter: ["text-summary", "html"],
       thresholds: { lines: 85, functions: 85, branches: 75 },
     },

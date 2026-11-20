@@ -86,7 +86,8 @@ flowchart LR
 ```
 src/
   core/domain        regras e diagnóstico, alertas, métricas, formatação. TypeScript puro.
-  core/application   casos de uso (Rastro), portas e interpretação da pergunta.
+  core/application   casos de uso em módulos (consultas, atendimento, alertas da tecnologia,
+                     painel da gestão), a fachada Rastro, as portas e a interpretação da pergunta.
   adapters/demo      dados fictícios determinísticos e o histórico de um mês.
   adapters/ia        Claude com tool use e o explicador só com regras.
   adapters/memoria   catálogo e repositórios em memória.
@@ -108,6 +109,7 @@ As fronteiras são verificadas no CI pelo `dependency-cruiser`: o domínio não 
 - [0003: Estado da demonstração no navegador](docs/adr/0003-estado-da-demo-no-navegador.md)
 - [0004: Perguntas parecidas sem explicação viram um alerta](docs/adr/0004-falhas-em-grupo-viram-alerta.md)
 - [0005: Privacidade por padrão](docs/adr/0005-privacidade-por-padrao.md)
+- [0006: Limite de uso na rota de IA](docs/adr/0006-limite-de-uso-da-ia.md)
 
 ## Qualidade
 
@@ -118,12 +120,12 @@ O CI roda a cada push:
 | ESLint | `npm run lint` |
 | TypeScript estrito | `npm run typecheck` |
 | Regras de arquitetura | `npm run arquitetura` |
-| 56 testes unitários com cobertura mínima | `npm run test:cobertura` |
+| 65 testes unitários com cobertura mínima | `npm run test:cobertura` |
 | Servidor MCP de ponta a ponta | `npm run mcp:testar` |
 | Build de produção | `npm run build` |
 | 11 testes de ponta a ponta (computador e celular) | `npm run test:e2e` |
 
-Alguns testes que contam a história: a mesma venda sempre tem a mesma causa; uma pergunta fora do assunto ("oi") não abre caso; venda de outro creator não é diagnosticada; nenhum diagnóstico tem dados do comprador; a pergunta da Lia faz o alerta crescer de 5 para 6 vendas; resolver o alerta encerra todos os casos ligados; a página não tem rolagem horizontal no celular.
+Alguns testes que contam a história: a mesma venda sempre tem a mesma causa; uma pergunta fora do assunto ("oi") não abre caso; venda de outro creator não é diagnosticada; nenhum diagnóstico tem dados do comprador; a pergunta da Lia faz o alerta crescer de 5 para 6 vendas; resolver o alerta encerra todos os casos ligados; a página não tem rolagem horizontal no celular; o caminho com o Claude é testado com um cliente falso, sem gastar API.
 
 ## Rodar localmente
 
@@ -139,7 +141,7 @@ npm run test:e2e
 
 ### IA de verdade (opcional)
 
-Sem chave, a rota `/api/perguntar` responde só com as regras, e é assim que a demonstração publicada funciona. Para usar o Claude com ferramentas, copie `.env.example` para `.env.local` e preencha `ANTHROPIC_API_KEY`. A causa continua vindo do motor de regras; a IA só entende a pergunta e reescreve a explicação.
+Sem chave, a rota `/api/perguntar` responde só com as regras, e é assim que a demonstração publicada funciona. Com ou sem chave, cada origem pode fazer até 10 perguntas por minuto, para a rota não virar uma fonte de custo aberta ([ADR 0006](docs/adr/0006-limite-de-uso-da-ia.md)). Para usar o Claude com ferramentas, copie `.env.example` para `.env.local` e preencha `ANTHROPIC_API_KEY`. A causa continua vindo do motor de regras; a IA só entende a pergunta e reescreve a explicação.
 
 ### Servidor MCP
 

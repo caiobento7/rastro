@@ -53,13 +53,24 @@ function instrucoes(nome: string, hoje: string) {
   ].join("\n");
 }
 
+/** O pedaço do SDK que o explicador usa. Permite trocar o cliente real por um falso nos testes. */
+export interface ClienteDeMensagens {
+  messages: {
+    create(params: Anthropic.Messages.MessageCreateParamsNonStreaming): Promise<Anthropic.Messages.Message>;
+  };
+}
+
 export class ExplicadorComClaude implements Explicador {
-  private readonly cliente = new Anthropic();
+  private readonly cliente: ClienteDeMensagens;
+  private readonly modelo: string;
 
   constructor(
     private readonly rastro: Rastro,
-    private readonly modelo: string = process.env.RASTRO_MODEL || "claude-opus-5-5",
-  ) {}
+    opcoes: { cliente?: ClienteDeMensagens; modelo?: string } = {},
+  ) {
+    this.cliente = opcoes.cliente ?? new Anthropic();
+    this.modelo = opcoes.modelo ?? (process.env.RASTRO_MODEL || "claude-opus-5-5");
+  }
 
   private executar(nome: string, entrada: Record<string, unknown>, creatorId: string, vistas: string[]): unknown {
     if (nome === "buscar_vendas") {

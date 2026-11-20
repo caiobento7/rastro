@@ -13,7 +13,8 @@ Arquitetura hexagonal (portas e adaptadores):
 
 ```
 src/core/domain        regras, diagnóstico, alertas e métricas. TypeScript puro.
-src/core/application   casos de uso (classe Rastro) e portas (interfaces).
+src/core/application   casos de uso em módulos (consultas, atendimento, alertas, painel),
+                       a fachada Rastro e as portas (interfaces).
 src/adapters           implementações das portas: dados da demo, memória, IA.
 src/app, components    telas e rota HTTP. Usam o núcleo, nunca o contrário.
 mcp/                   servidor MCP, outro adaptador do mesmo núcleo.
