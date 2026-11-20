@@ -64,4 +64,12 @@ test("a gestão mostra os números e para qual time vai cada causa", async ({ pa
   await expect(page.getByText("Explicados sem atendente")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Cada causa tem um time que pode evitá-la" })).toBeVisible();
   await expect(page.getByRole("cell", { name: "Marketing e Conteúdo" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Roteiro 1\/5/ })).toBeVisible();
+});
+
+test("pergunta fora do assunto recebe orientação e não abre caso", async ({ page }) => {
+  await page.getByLabel("Pergunte ao Rastro do seu jeito").fill("oi, tudo bem?");
+  await page.getByRole("button", { name: "Perguntar" }).click();
+  await expect(page.getByRole("status").filter({ hasText: "Eu explico vendas e comissões" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Roteiro 0\/5/ })).toBeVisible();
 });

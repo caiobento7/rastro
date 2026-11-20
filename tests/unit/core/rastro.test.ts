@@ -170,4 +170,19 @@ describe("interpretar a pergunta", () => {
     const v = demo.rastro.interpretarPergunta("c-lia", "por que não contou?");
     expect(v?.situacao).not.toBe("contou");
   });
+
+  it("'dia 15' com o produto leva à venda certa", () => {
+    const v = demo.rastro.interpretarPergunta("c-lia", "Por que o treino do dia 15 não entrou?");
+    expect(v?.data_hora.startsWith("2026-11-15")).toBe(true);
+    expect(v?.produto).toContain("Treino");
+  });
+
+  it("entende dia da semana: em 17/11 (terça), 'sábado' é 14/11", () => {
+    const v = demo.rastro.interpretarPergunta("c-lia", "e a venda de sábado?");
+    expect(v?.data_hora.startsWith("2026-11-14")).toBe(true);
+  });
+
+  it.each(["oi", "qual o horário de atendimento?", "obrigado!"])("não escolhe venda quando a pergunta é '%s'", (pergunta) => {
+    expect(demo.rastro.interpretarPergunta("c-lia", pergunta)).toBeNull();
+  });
 });

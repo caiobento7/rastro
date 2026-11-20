@@ -164,11 +164,13 @@ function PerguntaLivre({
 }) {
   const [pergunta, setPergunta] = useState("");
   const [enviando, setEnviando] = useState(false);
+  const [resposta, setResposta] = useState<string | null>(null);
   const exemplos = ["Minha venda de ontem não contou", "Cadê a comissão da creatina?", "Por que o treino do dia 15 não entrou?"];
 
   async function enviar(texto: string) {
     if (texto.trim().length < 2) return;
     setEnviando(true);
+    setResposta(null);
     try {
       const r = await fetch("/api/perguntar", {
         method: "POST",
@@ -178,7 +180,8 @@ function PerguntaLivre({
       const dados = (await r.json()) as RespostaDoExplicador & { erro?: string };
       if (!r.ok || dados.erro) throw new Error(dados.erro ?? "Não deu para responder agora.");
       if (!dados.venda_id) {
-        toast.info(dados.resposta);
+        // Pergunta fora do assunto: o Rastro responde ali mesmo e não abre caso.
+        setResposta(dados.resposta);
         return;
       }
       const resultado = executar((rastro) =>
@@ -221,6 +224,11 @@ function PerguntaLivre({
           Perguntar
         </Button>
       </div>
+      {resposta && (
+        <p role="status" className="mt-3 rounded-md bg-white/10 px-3 py-2 text-sm text-white">
+          {resposta}
+        </p>
+      )}
       <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-white/70">
         <span>Ou tente:</span>
         {exemplos.map((ex) => (

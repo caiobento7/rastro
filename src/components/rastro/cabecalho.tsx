@@ -20,7 +20,7 @@ const AREAS = [
 ];
 
 function useRoteiro() {
-  const { rastro } = useDemo();
+  const { rastro, estado } = useDemo();
   const casosDaLia = rastro.casosDoCreator("c-lia");
   const vendaDeOntem = rastro
     .vendasDoCreator("c-lia")
@@ -51,7 +51,7 @@ function useRoteiro() {
     {
       area: "/gestao",
       texto: "Na gestão, veja quanto o Rastro resolveu sozinho e qual time pode evitar cada causa.",
-      feito: false,
+      feito: estado.vistos.includes("gestao"),
     },
   ];
 }

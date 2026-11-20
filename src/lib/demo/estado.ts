@@ -22,6 +22,8 @@ export interface EstadoDaDemo {
   casos: Caso[];
   alertas: Record<string, StatusAlerta>;
   creatorAtual: string;
+  /** Áreas que a pessoa já abriu, para o roteiro marcar os passos de leitura. */
+  vistos: string[];
 }
 
 let inicial: EstadoDaDemo | null = null;
@@ -30,7 +32,7 @@ let inicial: EstadoDaDemo | null = null;
 export function estadoDeFabrica(): EstadoDaDemo {
   if (!inicial) {
     const { casos, alertas } = estadoInicialDaDemo();
-    inicial = { versao: 1, inicio: 0, casos, alertas, creatorAtual: CREATOR_PRINCIPAL };
+    inicial = { versao: 1, inicio: 0, casos, alertas, creatorAtual: CREATOR_PRINCIPAL, vistos: [] };
   }
   return inicial;
 }
@@ -67,7 +69,7 @@ function ler(): EstadoDaDemo {
     const bruto = window.localStorage.getItem(CHAVE);
     if (bruto) {
       const salvo = JSON.parse(bruto) as EstadoDaDemo;
-      if (salvo.versao === 1 && Array.isArray(salvo.casos)) return salvo;
+      if (salvo.versao === 1 && Array.isArray(salvo.casos)) return { ...salvo, vistos: salvo.vistos ?? [] };
     }
   } catch {
     // Navegação privada ou armazenamento bloqueado: segue com o estado de fábrica.
@@ -124,4 +126,10 @@ export function reiniciarDemo() {
 
 export function trocarCreator(id: string) {
   definirEstado({ ...obterEstado(), creatorAtual: id });
+}
+
+/** Registra que a pessoa abriu uma área (usado pelo roteiro da demonstração). */
+export function marcarVisto(area: string) {
+  const estado = obterEstado();
+  if (!estado.vistos.includes(area)) definirEstado({ ...estado, vistos: [...estado.vistos, area] });
 }

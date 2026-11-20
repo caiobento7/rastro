@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "rastro": {
+      "command": "node",
+      "args": ["mcp/dist/rastro-mcp.mjs"]
+    }
+  }
+}

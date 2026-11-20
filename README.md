@@ -118,12 +118,12 @@ O CI roda a cada push:
 | ESLint | `npm run lint` |
 | TypeScript estrito | `npm run typecheck` |
 | Regras de arquitetura | `npm run arquitetura` |
-| 50 testes unitários com cobertura mínima | `npm run test:cobertura` |
+| 56 testes unitários com cobertura mínima | `npm run test:cobertura` |
 | Servidor MCP de ponta a ponta | `npm run mcp:testar` |
 | Build de produção | `npm run build` |
-| 10 testes de ponta a ponta (computador e celular) | `npm run test:e2e` |
+| 11 testes de ponta a ponta (computador e celular) | `npm run test:e2e` |
 
-Alguns testes que contam a história: a mesma venda sempre tem a mesma causa; venda de outro creator não é diagnosticada; nenhum diagnóstico tem dados do comprador; a pergunta da Lia faz o alerta crescer de 5 para 6 vendas; resolver o alerta encerra todos os casos ligados; a página não tem rolagem horizontal no celular.
+Alguns testes que contam a história: a mesma venda sempre tem a mesma causa; uma pergunta fora do assunto ("oi") não abre caso; venda de outro creator não é diagnosticada; nenhum diagnóstico tem dados do comprador; a pergunta da Lia faz o alerta crescer de 5 para 6 vendas; resolver o alerta encerra todos os casos ligados; a página não tem rolagem horizontal no celular.
 
 ## Rodar localmente
 
@@ -151,6 +151,19 @@ claude mcp add rastro -- node mcp/dist/rastro-mcp.mjs
 ```
 
 Depois, pergunte: *"A Lia diz que a venda de ontem não contou. O que aconteceu?"*
+
+**Funcionando de verdade.** Execução real em 20/11/2026, no Claude Code em modo não interativo, com o servidor do Rastro e nenhuma outra ferramenta liberada. O Claude buscou as vendas de 16/11, rodou o diagnóstico, abriu o caso e explicou para a Lia sem inventar a causa:
+
+![O Claude usando as ferramentas do Rastro pelo servidor MCP](docs/telas/mcp-claude.png)
+
+Para repetir sem mudar a sua configuração do Claude Code:
+
+```bash
+npm run mcp:build
+claude -p "A Lia diz que a venda de ontem não contou. O que aconteceu?" \
+  --mcp-config mcp/claude-mcp.json --strict-mcp-config \
+  --allowedTools "mcp__rastro__buscar_vendas,mcp__rastro__diagnosticar_venda,mcp__rastro__abrir_caso"
+```
 
 ## Limites e cuidados
 

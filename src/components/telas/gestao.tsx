@@ -8,6 +8,8 @@ import { COR_DA_CAUSA, SeloCausa } from "@/components/rastro/visual";
 import { MINIMO_PARA_ALERTA } from "@/core/domain/alertas";
 import { CAUSAS, ORDEM_DAS_CAUSAS } from "@/core/domain/causas";
 import { dia, duracao, minutosEntre } from "@/core/domain/formatar";
+import { useEffect } from "react";
+import { marcarVisto } from "@/lib/demo/estado";
 import { useDemo } from "@/lib/demo/use-demo";
 
 const configDoGrafico = Object.fromEntries(
@@ -16,6 +18,7 @@ const configDoGrafico = Object.fromEntries(
 
 export function TelaGestao() {
   const { rastro } = useDemo();
+  useEffect(() => marcarVisto("gestao"), []);
   const painel = rastro.painel();
   const { numeros, continuaram } = painel;
   const alerta = painel.alertas[0];

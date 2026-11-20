@@ -28,6 +28,13 @@ describe("POST /api/perguntar sem chave de API", () => {
     expect(dados.resposta).toMatch(/^Os dados não explicam esta venda\./);
   });
 
+  it("pergunta fora do assunto não escolhe venda", async () => {
+    const r = await POST(pedido({ creatorId: "c-lia", pergunta: "oi, tudo bem?" }));
+    const dados = await r.json();
+    expect(dados.venda_id).toBeNull();
+    expect(dados.resposta).toMatch(/^Eu explico vendas e comissões/);
+  });
+
   it("recusa JSON inválido", async () => {
     const r = await POST(pedido("{não é json"));
     expect(r.status).toBe(400);
